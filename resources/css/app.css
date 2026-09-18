@@ -1,15 +1,42 @@
 @import 'tailwindcss';
 
+@import "flowbite/src/themes/default";
 @plugin '@tailwindcss/forms';
+
+@plugin "flowbite/plugin";
+@plugin "flowbite-typography";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@source "../../node_modules/flowbite";
 
 @theme {
-  --font-sans:
-    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+   --font-sans: 'Inter', 'ui-sans-serif', Figtree,'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Mendefinisikan warna primary agar dikenali oleh template Flowbite */
+    --color-primary-50: var(--color-blue-50);
+    --color-primary-100: var(--color-blue-100);
+    --color-primary-200: var(--color-blue-200);
+    --color-primary-300: var(--color-blue-300);
+    --color-primary-400: var(--color-blue-400);
+    --color-primary-500: var(--color-blue-500);
+    --color-primary-600: var(--color-blue-600);
+    --color-primary-700: var(--color-blue-700);
+    --color-primary-800: var(--color-blue-800);
+    --color-primary-900: var(--color-blue-900);
+    --color-primary-950: var(--color-blue-950);
+
+    --font-body: 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
+     
+
 }
+
+/* input.css src ==> flowbite */ 
+@custom-variant dark (&:where(.dark, .dark *));
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
