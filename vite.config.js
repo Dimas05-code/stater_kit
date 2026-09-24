@@ -13,9 +13,12 @@ export default defineConfig({
    server: {
         // penambahan manual supaya bisa reload otomastis di device lain
         host: '192.168.100.108',
+        // host: '10.222.142.210',
+
         // host: '0.0.0.0',
         hmr: {
             host: '192.168.100.108',
+            //    host: '10.222.142.210',
         },
         // ////////////////////////
         watch: {
