@@ -82,6 +82,11 @@ Route::get('/about', function () {
 
 Route::get('/dashboard', [PostDashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboard/create', [PostDashboardController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.create');
+Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.show');
+
+
+
 
 
 Route::middleware('auth')->group(function () {

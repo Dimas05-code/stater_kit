@@ -1,11 +1,12 @@
  <!-- Start block -->
  <section class="p-3  antialiased">
+     <h2 class="text-2xl font-semibold pl-3 mb-4">Dibuat oleh: {{ Auth::user()->name }}</h2>
      <div class="max-w-7xl px-4">
          <!-- Start coding here -->
          <div class="bg-white dark:bg-gray-800 relative border sm:rounded-lg overflow-hidden">
              <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                  <div class="w-full md:w-1/2">
-                     <form class="flex items-center">
+                     <form class="flex items-center" name='keywoard' autocomplete="off">
                          <label for="simple-search" class="sr-only">Search</label>
                          <div class="relative w-full">
                              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -16,16 +17,16 @@
                                          clip-rule="evenodd" />
                                  </svg>
                              </div>
-                             <input type="text" id="simple-search"
+                             <input type="text" id="simple-search" name='keywoard'
                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                 placeholder="Search" required="">
+                                 placeholder="Search" required>
                          </div>
                      </form>
                  </div>
                  <div
-                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                     <button type="button" id="createProductModalButton" data-modal-target="createProductModal"
-                         data-modal-toggle="createProductModal"
+                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 shrink-0">
+                     <a href="{{ route('dashboard.create') }}" id="createProductModalButtonn"
+                         data-modal-target="createProductModall" data-modal-toggle="createProductModall"
                          class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                          <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -33,7 +34,7 @@
                                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                          </svg>
                          Add product
-                     </button>
+                     </a>
                      <div class="flex items-center space-x-3 w-full md:w-auto">
                          <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                              class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -185,16 +186,19 @@
                          </tr>
                      </thead>
                      <tbody>
-                         @foreach ($posts as $post)
+                         @forelse ($posts as $post)
                              <tr class="border-b dark:border-gray-700">
                                  <th scope="row"
                                      class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                      {{ $loop->iteration }} </th>
                                  <td class="px-4 py-3">{{ $post->tittle }}</td>
                                  <td class="px-4 py-3">{{ $post->author->name }}</td>
-                                 <td class="px-4 py-3 max-w-[12rem] truncate">{{ $post->category->name }}</td>
+                                 <td class="px-4 py-3 ">{{ $post->category->name }}</td>
                                  <td class="px-4 py-3">{{ $post->created_at->diffForHumans() }}</td>
                                  <td class="px-4 py-3 flex items-center justify-end">
+
+
+
                                      <button id="post-{{ $post->id }}-dropdown-button"
                                          data-dropdown-toggle="post-{{ $post->id }}-dropdown"
                                          class="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
@@ -207,7 +211,8 @@
                                      </button>
                                      <div id="post-{{ $post->id }}-dropdown"
                                          class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                         <ul class="py-1 text-sm" aria-labelledby="aplle-imac-27-dropdown-button">
+                                         <ul class="py-1 text-sm"
+                                             aria-labelledby="post-{{ $post->id }}-dropdown-button">
                                              <li>
                                                  <button type="button" data-modal-target="updateProductModal"
                                                      data-modal-toggle="updateProductModal"
@@ -223,8 +228,11 @@
                                                  </button>
                                              </li>
                                              <li>
-                                                 <button type="button" data-modal-target="readProductModal"
-                                                     data-modal-toggle="readProductModal"
+
+                                                 {{-- <a href="/dashboard/{{ $post->slug }}" --}}
+                                                 <a href="{{ route('dashboard.show', $post->slug) }}"
+                                                     data-modal-target="readProductModall"
+                                                     data-modal-toggle="readProductModall"
                                                      class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200">
                                                      <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
                                                          viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -233,7 +241,8 @@
                                                              d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" />
                                                      </svg>
                                                      Preview
-                                                 </button>
+                                                 </a>
+
                                              </li>
                                              <li>
                                                  <button type="button" data-modal-target="deleteModal"
@@ -252,14 +261,36 @@
                                      </div>
                                  </td>
                              </tr>
-                         @endforeach
+                         @empty
+                             {{-- Jika halaman tidak ditemukkan --}}
+                             <tr>
+                                 <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                     <div class="flex flex-col items-center justify-center space-y-2">
+                                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                         </svg>
+                                         <span class="text-base font-medium">Data tidak ditemukan</span>
+
+                                         <!-- Tambahan tombol Reset -->
+                                         <a href="{{ route('dashboard') }}"
+                                             class="mt-4 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                             Kembali ke Daftar Postingan
+                                         </a>
+                                     </div>
+                                 </td>
+                             </tr>
+                         @endforelse
                      </tbody>
                  </table>
-
              </div>
-             <div class="p-3">
-                 {{ $posts->links() }}
-             </div>
+             {{-- Jika halaman sedikit tidak usah menampilkan paginate --}}
+             @if ($posts->hasPages())
+                 <div class="p-3">
+                     {{ $posts->links() }}
+                 </div>
+             @endif
          </div>
      </div>
  </section>

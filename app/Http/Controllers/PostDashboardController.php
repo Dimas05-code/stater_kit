@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use function Laravel\Prompts\alert;
 
 class PostDashboardController extends Controller
 {
@@ -14,7 +17,16 @@ class PostDashboardController extends Controller
     public function index()
     {
         //
-        return view('dashboard', ['posts' => Post::latest()->paginate()]);
+        $posts = Post::latest()->where('author_id', Auth::user()->id);
+
+        if (request('keywoard')) {
+            $posts->where('tittle', 'like', '%' . request('keywoard') . '%');
+
+            // if ($posts->count() == 0) {
+            //     return redirect()->route('dashboard');
+            // }
+        }
+        return view('dashboard.index', ['posts' => $posts->paginate(3)->withQueryString()]);
     }
 
     /**
@@ -23,6 +35,7 @@ class PostDashboardController extends Controller
     public function create()
     {
         //
+        return view('dashboard.create');
     }
 
     /**
@@ -36,9 +49,11 @@ class PostDashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
         //
+        return view('dashboard.show', ['post' => $post]);
+        // dd($post->all());
     }
 
     /**
