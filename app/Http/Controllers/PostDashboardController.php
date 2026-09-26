@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -48,10 +49,27 @@ class PostDashboardController extends Controller
 
         // validation
         $validated = $request->validate([
-            'tittle' => ['required'],
+            'tittle' => ['required', 'unique:posts', 'min:5', 'max:50'],
             'category_id' => ['required'],
             'body' => ['required'],
         ]);
+
+        // Custom validation
+        // Validator::make($request->all(), [
+        //     'tittle' => ['required', 'unique:posts', 'min:5', 'max:50'],
+        //     'category_id' => ['required'],
+        //     'body' => ['required'],
+        // ], [
+        //     'tittle.required' => 'field :attribute harus disi',
+        //     'category_id.required' => 'pilih salah satu :attribute',
+        //     'body.required' => 'body harus diisi',
+        //     'tittle.unique' => 'ganti yang lain',
+        //     'tittle.min' => 'minimal 3 kata',
+        //     'tittle.max' => 'kebanyakan'
+        // ], [
+        //     'tittle' => 'judul',
+        //     'category_id' => 'categori'
+        // ])->validate();
 
 
         Post::create([
@@ -62,7 +80,7 @@ class PostDashboardController extends Controller
             'isi' => $request->body,
         ]);
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with(['succes' => 'Your post berhasil']);
     }
 
     /**
