@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-use function Laravel\Prompts\alert;
+
 
 class PostDashboardController extends Controller
 {
@@ -44,6 +44,25 @@ class PostDashboardController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->tittle);
+
+        // validation
+        $validated = $request->validate([
+            'tittle' => ['required'],
+            'category_id' => ['required'],
+            'body' => ['required'],
+        ]);
+
+
+        Post::create([
+            'tittle' => $request->tittle,
+            'author_id' => Auth::user()->id,
+            'slug' => Str::slug($request->tittle),
+            'category_id' => $request->category_id,
+            'isi' => $request->body,
+        ]);
+
+        return redirect('/dashboard');
     }
 
     /**

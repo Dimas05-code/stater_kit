@@ -45,10 +45,10 @@ class Post extends Model
     use HasFactory;
 
     // $fillable ==> yang bisa di isi secara massal
-    protected $fillable = ['tittle', 'slug', 'author_id', 'isi'];
+    // protected $fillable = ['tittle', 'slug', 'author_id', 'isi', 'category_id'];
 
     // $guard ==> yang tidak bisa di isi secara massal (lainnya bisa)
-    // protected $guard = ['id']
+    protected $guarded  = ['id'];
 
     // Eager Loading By default
     protected $with = ['author', 'category'];
