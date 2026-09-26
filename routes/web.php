@@ -80,23 +80,33 @@ Route::get('/about', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [PostDashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', [PostDashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard/create', [PostDashboardController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.create');
+// Route::get('/dashboard/create', [PostDashboardController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.create');
 
-Route::post('/dashboard', [PostDashboardController::class, 'store'])->middleware(['auth', 'verified'])->name('dashboard.store');
+// Route::post('/dashboard', [PostDashboardController::class, 'store'])->middleware(['auth', 'verified'])->name('dashboard.store');
 
-Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.show');
-
-
+// Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.show');
 
 
+// Route::middleware('auth', 'verified')->group(function () {});
 
 
-Route::middleware('auth')->group(function () {
+
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+    Route::get('/dashboard', [PostDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/create', [PostDashboardController::class, 'create'])->name('dashboard.create');
+    Route::post('/dashboard', [PostDashboardController::class, 'store'])->name('dashboard.store');
+    Route::delete('/dashboard/{post:slug}', [PostDashboardController::class, 'destroy'])->name('dashboard.destroy');
+    Route::get('/dashboard/{post:slug}/edit', [PostDashboardController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('/dashboard/{post:slug}', [PostDashboardController::class, 'update'])->name('dashboard.update');
+    Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])->name('dashboard.show');
 });
 
 require __DIR__ . '/auth.php';

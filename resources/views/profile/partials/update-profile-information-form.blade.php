@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    <form id="send-verification" method="post" action="{{ route('verification.send') }}" enctype="multipart/form-data">
         @csrf
     </form>
 
@@ -56,6 +56,22 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        {{-- Avatar --}}
+        <div>
+            <label class="block mb-2.5 text-sm font-medium text-gray-800" for="file_input">Upload file</label>
+            <input
+                class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+                id="file_input" type="file">
+            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="avatar_help">.png or .jpg</div>
+        </div>
+
+        {{-- picture avatar --}}
+        <div>
+            <img class="w-20 h-20 rounded-full"
+                src="{{ $user->avatar ? asset($user->avatar) : asset('storage/img/avatar.jpg') }}"
+                alt="{{ $user->name }}">
         </div>
 
         <div class="flex items-center gap-4">
